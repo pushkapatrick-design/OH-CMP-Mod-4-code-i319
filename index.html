@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I319 Vegetation Management Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+        }
+
+        #sl-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+        }
+
+        #sl-stage {
+            width: 1920px;
+            height: 1080px;
+            position: relative;
+            transform-origin: top left;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+            overflow: hidden;
+        }
+
+        .background-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 32px 80px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(12px);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .header-left {
+            flex: 1;
+            min-width: 0;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .header-image {
+            margin-top: 16px;
+        }
+
+        .header-image img {
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 10;
+            padding: 48px 80px;
+            height: calc(100% - 256px);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            height: 100%;
+        }
+
+        .grid-2 > div:first-child {
+            animation: slideInFromLeft 0.8s ease-out 0.2s both;
+        }
+
+        .grid-2 > div:last-child {
+            animation: slideInFromRight 0.8s ease-out 0.2s both;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: scaleIn 0.6s ease-out both;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalImageZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .image-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #475569;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            background: #334155;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-card:hover {
+            border-color: #3b82f6;
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 288px;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .image-card:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-overlay-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 16px;
+        }
+
+        .code-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .code-card {
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: bounceIn 0.8s ease-out both;
+        }
+
+        .code-card:hover {
+            transform: scale(1.05);
+        }
+
+        .code-card-319 {
+            background: linear-gradient(to bottom right, #ea580c, #c2410c);
+            border: 1px solid rgba(234, 88, 12, 0.3);
+            animation-delay: 0.4s;
+        }
+
+        .code-card-i266 {
+            background: linear-gradient(to bottom right, #9333ea, #7e22ce);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            animation-delay: 0.5s;
+        }
+
+        .code-number {
+            font-size: 72px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .code-label {
+            font-size: 24px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .step-nav {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step-btn {
+            flex: 1;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(71, 85, 105, 0.5);
+            background: rgba(51, 65, 85, 0.3);
+            color: #cbd5e1;
+        }
+
+        .step-btn:hover {
+            background: rgba(51, 65, 85, 0.5);
+            border-color: #64748b;
+        }
+
+        .step-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .step-content {
+            transition: all 0.5s ease;
+        }
+
+        .step-content.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .step-icon {
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-icon svg {
+            width: 48px;
+            height: 48px;
+            color: white;
+        }
+
+        .step-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .step-description {
+            font-size: 24px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .step-points {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 24px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .step-point:hover {
+            background: rgba(51, 65, 85, 0.5);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 20px;
+            color: #e2e8f0;
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .step-point:hover .step-text {
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .btn-nav {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev {
+            background: #475569;
+            color: white;
+        }
+
+        .btn-prev:hover {
+            background: #334155;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-next {
+            background: #2563eb;
+            color: white;
+            margin-left: auto;
+        }
+
+        .btn-next:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-checklist {
+            background: #16a34a;
+            color: white;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-checklist:hover {
+            background: #15803d;
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(51, 65, 85, 0.5);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .checklist-checkbox {
+            width: 28px;
+            height: 28px;
+            margin-top: 4px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .checklist-text {
+            font-size: 20px;
+            flex: 1;
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover .checklist-text {
+            color: white;
+        }
+
+        .checklist-text.checked {
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+
+        .progress-card {
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+        }
+
+        .progress-text {
+            font-size: 18px;
+            color: #bfdbfe;
+        }
+
+        .progress-bar-container {
+            margin-top: 12px;
+            width: 100%;
+            background: #334155;
+            border-radius: 9999px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #3b82f6, #22c55e);
+            transition: width 0.5s ease;
+            border-radius: 9999px;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -64px;
+            right: 0;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 12px 24px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #334155;
+            color: #ef4444;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 24px 80px;
+            border-top: 1px solid rgba(51, 65, 85, 0.5);
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body>
+    <div id="sl-wrapper">
+        <div id="sl-stage">
+            <div class="background-pattern"></div>
+
+            <!-- Header -->
+            <header>
+                <div class="header-content">
+                    <div class="header-left">
+                        <h1><span style="font-weight: bold;">319 Trees/Veg in Proximity to Secondary (includes Service)</span></h1>
+                        <div class="header-image">
+                            <img src="https://raw.githubusercontent.com/pushkapatrick-design/ancillary-providers/main/Screenshot%202026-02-24%20134104.png" alt="Code Reference">
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-primary" onclick="toggleChecklist()">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                            <span id="checklist-btn-text">Show Checklist</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="grid-2">
+                    <!-- Left Column -->
+                    <div>
+                        <div class="card">
+                            <h3 class="card-title">
+                                <span class="pulse-dot"></span>
+                                Visual Reference
+                            </h3>
+                            <div class="image-grid">
+                                <div class="image-card" onclick="expandImage('https://raw.githubusercontent.com/pushkapatrick-design/OH-CMP-Mod-4-code-i319/main/I319.png')">
+                                    <img src="https://raw.githubusercontent.com/pushkapatrick-design/OH-CMP-Mod-4-code-i319/main/I319.png" alt="Vegetation Contact">
+                                    <div class="image-overlay">
+                                        <p class="image-overlay-text">Click to expand</p>
+                                    </div>
+                                </div>
+                                <div class="image-card" onclick="expandImage('https://raw.githubusercontent.com/pushkapatrick-design/OH-CMP-Mod-4-code-i319/main/I319%202.png')">
+                                    <img src="https://raw.githubusercontent.com/pushkapatrick-design/OH-CMP-Mod-4-code-i319/main/I319%202.png" alt="Service Point Contact">
+                                    <div class="image-overlay">
+                                        <p class="image-overlay-text">Click to expand</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-cards">
+                            <div class="code-card code-card-319" onclick="goToStep(1)">
+                                <div class="code-number">319</div>
+                                <div class="code-label">Vegetation Contact</div>
+                            </div>
+                            <div class="code-card code-card-i266" onclick="goToStep(3)">
+                                <div class="code-number">I266</div>
+                                <div class="code-label">Foreign Objects</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div>
+                        <div id="steps-container">
+                            <!-- Step Navigation -->
+                            <div class="step-nav">
+                                <button class="step-btn active" onclick="setStep(0)">Step 1</button>
+                                <button class="step-btn" onclick="setStep(1)">Step 2</button>
+                                <button class="step-btn" onclick="setStep(2)">Step 3</button>
+                                <button class="step-btn" onclick="setStep(3)">Step 4</button>
+                            </div>
+
+                            <!-- Step 1 -->
+                            <div class="card step-content" id="step-0">
+                                <div class="step-header">
+                                    <div class="step-icon" style="background-color: #4CAF50;">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="step-title">Check Trees & Vegetation</h3>
+                                        <p class="step-description">Look for trees or vegetation contacting the secondary or service at:</p>
+                                    </div>
+                                </div>
+                                <div class="step-points">
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #4CAF50;">1</div>
+                                        <p class="step-text">At the pole</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #4CAF50;">2</div>
+                                        <p class="step-text">Pole to pole</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #4CAF50;">3</div>
+                                        <p class="step-text">Pole to service point</p>
+                                    </div>
+                                </div>
+                                <div class="nav-buttons">
+                                    <button class="btn-nav btn-next" onclick="setStep(1)">Next →</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="card step-content hidden" id="step-1">
+                                <div class="step-header">
+                                    <div class="step-icon" style="background-color: #FF9800;">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="step-title">Report with Code 319</h3>
+                                        <p class="step-description">When you find vegetation contact, use Code 319 to report:</p>
+                                    </div>
+                                </div>
+                                <div class="step-points">
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #FF9800;">1</div>
+                                        <p class="step-text">Provide the street address</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #FF9800;">2</div>
+                                        <p class="step-text">Provide quantity of trees</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #FF9800;">3</div>
+                                        <p class="step-text">Provide types of trees (if known)</p>
+                                    </div>
+                                </div>
+                                <div class="nav-buttons">
+                                    <button class="btn-nav btn-prev" onclick="setStep(0)">← Previous</button>
+                                    <button class="btn-nav btn-next" onclick="setStep(2)">Next →</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="card step-content hidden" id="step-2">
+                                <div class="step-header">
+                                    <div class="step-icon" style="background-color: #2196F3;">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="step-title">Customer Notifications</h3>
+                                        <p class="step-description">For vegetation on Private Property:</p>
+                                    </div>
+                                </div>
+                                <div class="step-points">
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #2196F3;">1</div>
+                                        <p class="step-text">Leave a Door Hanger for customer notification</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #2196F3;">2</div>
+                                        <p class="step-text">Ensure customer is informed of the issue</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #2196F3;">3</div>
+                                        <p class="step-text">Document the notification</p>
+                                    </div>
+                                </div>
+                                <div class="nav-buttons">
+                                    <button class="btn-nav btn-prev" onclick="setStep(1)">← Previous</button>
+                                    <button class="btn-nav btn-next" onclick="setStep(3)">Next →</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="card step-content hidden" id="step-3">
+                                <div class="step-header">
+                                    <div class="step-icon" style="background-color: #9C27B0;">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="step-title">Alternative: Code I266</h3>
+                                        <p class="step-description">Use Code I266 for Foreign Objects when:</p>
+                                    </div>
+                                </div>
+                                <div class="step-points">
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #9C27B0;">1</div>
+                                        <p class="step-text">Objects are on the wire</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #9C27B0;">2</div>
+                                        <p class="step-text">Need to reroute installation</p>
+                                    </div>
+                                    <div class="step-point">
+                                        <div class="step-number" style="background-color: #9C27B0;">3</div>
+                                        <p class="step-text">Need to install guard</p>
+                                    </div>
+                                </div>
+                                <div class="nav-buttons">
+                                    <button class="btn-nav btn-prev" onclick="setStep(2)">← Previous</button>
+                                    <button class="btn-nav btn-checklist" onclick="toggleChecklist()">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                        </svg>
+                                        View Checklist
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Checklist -->
+                        <div class="card hidden" id="checklist-container">
+                            <h3 class="card-title">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                Inspection Checklist
+                            </h3>
+                            <div class="checklist">
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Check trees/vegetation contacting secondary at pole</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Check pole to pole contact points</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Check pole to service point contact</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Document street address</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Count quantity of trees</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Identify types of trees (if possible)</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Leave Door Hanger for private property</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" onchange="updateProgress()">
+                                    <span class="checklist-text">Report using Code 319 or I266</span>
+                                </label>
+                            </div>
+                            <div class="progress-card">
+                                <div class="progress-text">Progress: <span id="progress-count">0</span> of 8 items completed</div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer></footer>
+
+            <!-- Image Modal -->
+            <div class="modal hidden" id="image-modal" onclick="closeModal()">
+                <div class="modal-content">
+                    <button class="modal-close" onclick="closeModal()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        Close
+                    </button>
+                    <img id="modal-image" class="modal-image" src="" alt="Expanded view" onclick="event.stopPropagation()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let showingChecklist = false;
+
+        // Responsive scaler
+        function scaleStage() {
+            const wrapper = document.getElementById('sl-wrapper');
+            const stage = document.getElementById('sl-stage');
+            
+            if (!wrapper || !stage) return;
+            
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const scaleX = wrapperRect.width / 1920;
+            const scaleY = wrapperRect.height / 1080;
+            const scale = Math.min(scaleX, scaleY);
+            
+            stage.style.transform = `scale(${scale})`;
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            scaleStage();
+            
+            const resizeObserver = new ResizeObserver(() => {
+                scaleStage();
+            });
+            
+            const wrapper = document.getElementById('sl-wrapper');
+            if (wrapper) {
+                resizeObserver.observe(wrapper);
+            }
+        });
+
+        window.addEventListener('resize', scaleStage);
+
+        // Step navigation
+        function setStep(step) {
+            currentStep = step;
+            
+            // Update step buttons
+            const buttons = document.querySelectorAll('.step-btn');
+            buttons.forEach((btn, index) => {
+                if (index === step) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Update step content
+            const steps = document.querySelectorAll('.step-content');
+            steps.forEach((content, index) => {
+                if (index === step) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        // Toggle checklist
+        function toggleChecklist() {
+            showingChecklist = !showingChecklist;
+            const stepsContainer = document.getElementById('steps-container');
+            const checklistContainer = document.getElementById('checklist-container');
+            const btnText = document.getElementById('checklist-btn-text');
+            
+            if (showingChecklist) {
+                stepsContainer.classList.add('hidden');
+                checklistContainer.classList.remove('hidden');
+                btnText.textContent = 'Hide Checklist';
+            } else {
+                stepsContainer.classList.remove('hidden');
+                checklistContainer.classList.add('hidden');
+                btnText.textContent = 'Show Checklist';
+            }
+        }
+
+        // Update progress
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checklist-checkbox');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const percentage = (checkedCount / 8) * 100;
+            
+            document.getElementById('progress-count').textContent = checkedCount;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            
+            // Update text styling
+            checkboxes.forEach(cb => {
+                const text = cb.nextElementSibling;
+                if (cb.checked) {
+                    text.classList.add('checked');
+                } else {
+                    text.classList.remove('checked');
+                }
+            });
+        }
+
+        // Image modal
+        function expandImage(src) {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = src;
+            modal.classList.remove('hidden');
+            modal.style.animation = 'modalFadeIn 0.3s ease-out';
+            modalImage.style.animation = 'modalImageZoom 0.4s ease-out';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.opacity = '1';
+            }, 200);
+        }
+
+        // Go to step
+        function goToStep(step) {
+            setStep(step);
+        }
+    </script>
+</body>
+</html>
